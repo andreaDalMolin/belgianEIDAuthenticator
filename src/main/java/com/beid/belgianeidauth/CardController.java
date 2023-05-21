@@ -8,16 +8,10 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 import java.util.Optional;
 
@@ -28,9 +22,8 @@ public class CardController {
     private Button connectBank;
     @FXML
     private Circle circle;
-
-    private final Client client;
     public ObjectProperty<Paint> circleColor = new SimpleObjectProperty<>(Color.RED);
+    private final Client client;
 
     public CardController() {
         this.client = new Client();
@@ -100,12 +93,10 @@ public class CardController {
         // Disable the OK button until both fields are not empty
         Node okButton = dialog.getDialogPane().lookupButton(ButtonType.OK);
         okButton.setDisable(true);
-        clientNumber.textProperty().addListener((observable, oldValue, newValue) -> {
-            okButton.setDisable(newValue.trim().isEmpty() || pin.getText().trim().isEmpty());
-        });
-        pin.textProperty().addListener((observable, oldValue, newValue) -> {
-            okButton.setDisable(newValue.trim().isEmpty() || clientNumber.getText().trim().isEmpty());
-        });
+        clientNumber.textProperty().addListener((observable, oldValue, newValue)
+                -> okButton.setDisable(newValue.trim().isEmpty() || pin.getText().trim().isEmpty()));
+        pin.textProperty().addListener((observable, oldValue, newValue)
+                -> okButton.setDisable(newValue.trim().isEmpty() || clientNumber.getText().trim().isEmpty()));
 
         dialog.getDialogPane().setContent(grid);
 
